@@ -12,13 +12,25 @@ public class DLLNode extends Node{
 
     /**
      * Constructor which will set the data and the two nodes to null
-     * @param newData : Sets the data in the node
+     * @param newData : The data to be stored
      */
     DLLNode(int newData) {
         super(newData);
         this.setNext(null);
         this.setPrev(null);
         
+    }
+    
+    /**
+     * Overload constructor which will set the data, the next node, and the previous node
+     * @param newData : The data to be stored
+     * @param next : The node to be set to next
+     * @param prev : The node to be set to previous
+     */
+    DLLNode(int newData, DLLNode next, DLLNode prev){
+    	super(newData);
+    	this.setNext(next);
+    	this.setPrev(prev);
     }
     
     /**
