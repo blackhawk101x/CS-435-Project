@@ -1,6 +1,6 @@
 package long_Integer;
 
-public class DLLSimpleList {
+public class DLLSimpleList implements SimpleList<DLLNode>{
 
 	private DLLNode head;
     private DLLNode tail;
@@ -11,59 +11,65 @@ public class DLLSimpleList {
 
     }
 
-    /**
- * Implement the following methods
- * 
+	@Override
+	public void insertFirst(int data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void insertLast(int data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public DLLNode first() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DLLNode last() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isFirst(DLLNode n) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isLast(DLLNode n) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public DLLNode before(DLLNode n) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DLLNode after(DLLNode n) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
     
-    @Override
-    public void insertFirst(int data) {
-        // implement your code here 
-    }
-
-    @Override
-    public void insertLast(int data) {
-        // implement your code here 
-    }
-
-    @Override
-    public DLLNode first() {
-        // implement your code here 
-    }
-
-    @Override
-    public DLLNode last() {
-        // implement your code here 
-    }
-
-    @Override
-    public boolean isFirst(DLLNode n) {
-        // implement your code here 
-    }
-
-    @Override
-    public boolean isLast(DLLNode n) {
-        // implement your code here 
-    }
-
-    @Override
-    public DLLNode before(DLLNode n) {
-        // implement your code here 
-    }
-
-    @Override
-    public DLLNode after(DLLNode n) {
-        // implement your code here 
-    }
-
-    @Override
-    public boolean isEmpty() {
-        // implement your code here 
-    }
-
-    @Override
-    public int size() {
-        // implement your code here 
-    }
-
-*/
 }
