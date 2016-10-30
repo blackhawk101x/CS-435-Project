@@ -123,28 +123,93 @@ public class LongInteger {
 	     * @return True if the long integers are equal
 	     */
 	    public boolean equalTo(LongInteger i) {
+	    	boolean equalTo =true;
 	    	if(this.getSign()!=i.getSign()){
-	    		return false;
+	    		equalTo= false;
 	    	}
 	    	else if(i.getDigitCount()!=this.getDigitCount()){
-	    		return false;
+	    		equalTo= false;
 	    	}
 	    	else{
 	    		Node curr1 = this.getFirst();
 	    		Node curr2 = i.getFirst();
 	    		while(!this.isLast(curr1) && !this.isLast(curr2)){
 	    			if(curr1.getData()!=curr2.getData()){
-	    				return false;
+	    				equalTo= false;
+	    				break;
 	    			}
 	    			curr1 = this.getNext(curr1);
 	    			curr2 = i.getNext(curr2);
 	    		}
-	    		return true;
 	    	}
+	    	return equalTo;
 	    }
 
+	    /**
+	     * Checks to see if the long int is less than the one given
+	     * @param i : the long integer to compare against
+	     * @return true if the this long integer is less than the goven long integer
+	     */
 	    public boolean lessThan(LongInteger i) {
-	    	return false;
+	    	boolean lessThan = false;
+	    	
+	    	// first step is to check the signs
+	    	if(this.getSign() && !i.getSign()){ // if this long int is negative and i is not
+	    		lessThan = true;
+	    	}
+	    	else if(!this.getSign() && i.getSign()){ // if this long int is positive and i is not
+	    		lessThan = false;
+	    	}
+	    	else{ // if the signs are equal
+	    		// second step is to check the number of digits
+	    		
+	    		// if the signs are negative.
+	    		// because the signs are negative, the logic is inverted
+	    		if(this.getSign()){
+	    			if(this.getDigitCount()>i.getDigitCount()){ // if this long int has fewer digits than i
+			    		lessThan = true;    		
+			    	}
+	    			else if(this.getDigitCount()<i.getDigitCount()){ // if this long int has more digits than i
+	    				lessThan =false;
+	    			}
+	    			else{ // if the digit count is equal
+	    				Node curr1 = this.getFirst();
+	    	    		Node curr2 = i.getFirst();
+	    	    		while(!this.isLast(curr1) && !this.isLast(curr2)){
+    	    				 //Because of the negative signs, the larger of the the two is smaller
+    	    				if(curr1.getData()>curr2.getData()){
+    	    					lessThan=true;
+    	    					break;
+    	    				}
+	    	    			curr1 = this.getNext(curr1);
+	    	    			curr2 = i.getNext(curr2);
+	    	    		}
+	    			}
+	    		}
+	    		else{ // if the signs are positive
+	    			if(this.getDigitCount()<i.getDigitCount()){ // if this long int has fewer digits than i
+			    		lessThan = true;    		
+			    	}
+	    			else if(this.getDigitCount()>i.getDigitCount()){ // if this long in has more digits than i
+	    				lessThan = false;
+	    			}
+	    			else{ // if they have the same number of digits
+	    				Node curr1 = this.getFirst();
+	    	    		Node curr2 = i.getFirst();
+	    	    		while(!this.isLast(curr1) && !this.isLast(curr2)){
+    	    				if(curr1.getData()<curr2.getData()){
+    	    					lessThan = true;
+    	    					break;
+    	    				}
+	    	    			curr1 = this.getNext(curr1);
+	    	    			curr2 = i.getNext(curr2);
+	    	    		}
+	    			}
+	    			
+	    		}	
+	    	}
+	    	return lessThan;
+	    	
 	    }
 
 	    public boolean greaterThan(LongInteger i) {
