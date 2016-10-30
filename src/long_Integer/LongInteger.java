@@ -77,7 +77,6 @@ public class LongInteger {
 	    			num+=("0000");
 	    		}
 	    		pt= this.list.after(pt);
-	    		//pt = pt.getNext();
 	    	}
 	    	System.out.println(num);
 	    }
@@ -118,8 +117,30 @@ public class LongInteger {
 	    	return count;
 	    }
 
+	    /**
+	     * Checks to see if the LongIntegers are equal to one another
+	     * @param i : The long integer to compare to
+	     * @return True if the long integers are equal
+	     */
 	    public boolean equalTo(LongInteger i) {
-	    	return false;
+	    	if(this.getSign()!=i.getSign()){
+	    		return false;
+	    	}
+	    	else if(i.getDigitCount()!=this.getDigitCount()){
+	    		return false;
+	    	}
+	    	else{
+	    		Node curr1 = this.getFirst();
+	    		Node curr2 = i.getFirst();
+	    		while(!this.isLast(curr1) && !this.isLast(curr2)){
+	    			if(curr1.getData()!=curr2.getData()){
+	    				return false;
+	    			}
+	    			curr1 = this.getNext(curr1);
+	    			curr2 = i.getNext(curr2);
+	    		}
+	    		return true;
+	    	}
 	    }
 
 	    public boolean lessThan(LongInteger i) {
