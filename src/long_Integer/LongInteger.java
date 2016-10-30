@@ -213,7 +213,66 @@ public class LongInteger {
 	    }
 
 	    public boolean greaterThan(LongInteger i) {
-	    	return false;
+	    	boolean greaterThan = false;
+	    	
+	    	// first step is to check the signs
+	    	if(this.getSign() && !i.getSign()){ // if this long int is negative and i is not
+	    		greaterThan = false;
+	    	}
+	    	else if(!this.getSign() && i.getSign()){ // if this long int is positive and i is not
+	    		greaterThan = true;
+	    	}
+	    	else{ // if the signs are equal
+	    		// second step is to check the number of digits
+	    		
+	    		// if the signs are negative.
+	    		// because the signs are negative, the logic is inverted
+	    		if(this.getSign()){
+	    			if(this.getDigitCount()>i.getDigitCount()){ // if this long int has fewer digits than i
+			    		greaterThan = false;    		
+			    	}
+	    			else if(this.getDigitCount()<i.getDigitCount()){ // if this long int has more digits than i
+	    				greaterThan =true;
+	    			}
+	    			else{ // if the digit count is equal
+	    				Node curr1 = this.getFirst();
+	    	    		Node curr2 = i.getFirst();
+	    	    		while(!this.isLast(curr1) && !this.isLast(curr2)){
+    	    				 //Because of the negative signs, the larger of the the two is smaller
+    	    				if(curr1.getData()>curr2.getData()){
+    	    					greaterThan=false;
+    	    					break;
+    	    				}
+	    	    			curr1 = this.getNext(curr1);
+	    	    			curr2 = i.getNext(curr2);
+	    	    		}
+	    			}
+	    		}
+	    		else{ // if the signs are positive
+	    			if(this.getDigitCount()<i.getDigitCount()){ // if this long int has fewer digits than i
+			    		greaterThan = false;    		
+			    	}
+	    			else if(this.getDigitCount()>i.getDigitCount()){ // if this long in has more digits than i
+	    				greaterThan = true;
+	    			}
+	    			else{ // if they have the same number of digits
+	    				Node curr1 = this.getFirst();
+	    	    		Node curr2 = i.getFirst();
+	    	    		while(!this.isLast(curr1) && !this.isLast(curr2)){
+    	    				if(curr1.getData()<curr2.getData()){
+    	    					greaterThan = false;
+    	    					break;
+    	    				}
+	    	    			curr1 = this.getNext(curr1);
+	    	    			curr2 = i.getNext(curr2);
+	    	    		}
+	    			}
+	    			
+	    		}	
+	    	}
+	    	
+	    	
+	    	return greaterThan;
 	    }
 
 	    /**
