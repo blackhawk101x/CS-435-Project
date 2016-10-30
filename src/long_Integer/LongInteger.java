@@ -59,7 +59,7 @@ public class LongInteger {
 	    	 */
 	    	num+=(this.list.first().getData());
 	    	
-	    	Node pt = this.list.first();
+	    	Node pt = this.getNext(this.list.first());
 	    	while(pt!=null){
 	    		if(pt.getData()>999){
 	    			num+=(pt.getData());
