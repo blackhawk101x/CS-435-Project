@@ -28,7 +28,7 @@ public class UtilityOperations {
 	 */
     public static int underFlow(int t) {
       if(t<9999){
-    	  return 0;
+    	  return t;
       }
       else{
     	  int underflow=0;
