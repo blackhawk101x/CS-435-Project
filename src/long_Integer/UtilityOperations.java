@@ -24,22 +24,10 @@ public class UtilityOperations {
 	/**
 	 * Gets the digits that are not the first 4 in the integer.
 	 * @param t : The integer being checked
-	 * @return The digits that are not the first 4
+	 * @return The last 4 digits of the integer
 	 */
     public static int underFlow(int t) {
-      if(t<9999){
-    	  return t;
-      }
-      else{
-    	  int underflow=0;
-    	  int pt =0;
-    	  for(int x =0; t>9999;x++){
-    		  pt=t%10;
-    		  underflow += pt*(Math.pow(10, x));
-    		  t= t/10;
-    	  }
-    	  return underflow;
-      }
+      return t%10000;
     }
 
     /**
