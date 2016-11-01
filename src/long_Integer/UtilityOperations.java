@@ -10,15 +10,10 @@ public class UtilityOperations {
 	/**
 	 * Returns the digits that acceded the the digit count of 4;
 	 * @param t : The integer to be check
-	 * @return The overflow digits of the integer.
+	 * @return The remaining digits in front of the last 4 digits
 	 */
 	public static int overFlow(int t) {
-		if(t<9999){
-			return 0;
-		}
-		else{
-			return t/10000;
-		}
+		return t/10000;	
     }
 
 	/**
