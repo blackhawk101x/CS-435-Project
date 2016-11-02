@@ -19,6 +19,9 @@ public class LongInteger {
 	     */
 	    public LongInteger(String s) {
 	    	int num=-1;
+	    	
+	    	s = s.replace("\n", ""); // removes all the newline characters
+	    	
 	    	// checks to see if the number is negative
 	    	if(s.startsWith("-")){
 	    		this.setSign(true);
@@ -148,7 +151,7 @@ public class LongInteger {
 	    /**
 	     * Checks to see if the long int is less than the one given
 	     * @param i : the long integer to compare against
-	     * @return true if the this long integer is less than the goven long integer
+	     * @return true if the this long integer is less than the given long integer
 	     */
 	    public boolean lessThan(LongInteger i) {
 	    	boolean lessThan = false;
@@ -329,7 +332,11 @@ public class LongInteger {
 	    }
 
 	    public LongInteger add(LongInteger i) {
-	    	return null;
+	    	LongInteger newNum= new LongInteger();
+	    	
+	    	
+	    	
+	    	return newNum;
 	    }
 
 	    public LongInteger subtract(LongInteger i) {
