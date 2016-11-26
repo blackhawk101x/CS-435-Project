@@ -2,10 +2,11 @@ package long_Integer;
 
 import java.util.ArrayList;
 
-public class main {
-
+public class main {	
 	
-	private void testCase1(){
+	public static void main(String[] args) {
+		System.out.println("Hello Dakota");
+		
 		LongInteger A = new LongInteger("3333");
         LongInteger B = new LongInteger("99999999");
         LongInteger C = new LongInteger("-732246813575");
@@ -69,10 +70,60 @@ public class main {
                 System.out.printf("Equal to:%6b   Less Than:%6b   Greater Than:%6b%n",mainList.get(i).equalTo(mainList.get(j)), mainList.get(i).lessThan(mainList.get(j)),mainList.get(i).greaterThan(mainList.get(j)));
             }
         }
-	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+        
+        for(int i = 0; i <mainList.size(); i++){
+            for(int j = 0; j <mainList.size(); j++) {
+                if(i==j) continue;
+                System.out.println("\n" + Character.toString((char) (i + 65)) + " added to " + Character.toString((char) (j + 65)));
+                mainList.get(i).add(mainList.get(j)).output();
+            }
+        }
+
+        for(int i = 0; i <mainList.size(); i++){
+            for(int j = 0; j <mainList.size(); j++) {
+                if(i==j) continue;
+                System.out.println("\n" + Character.toString((char) (i + 65)) + " subtracted from " + Character.toString((char) (j + 65)));
+                mainList.get(j).subtract(mainList.get(i)).output();
+            }
+        }
+
+        LongInteger J = B.add(C);
+        mainList.add(J);
+
+        LongInteger K = C.add(D);
+        mainList.add(K);
+
+        LongInteger L = I.add(I);
+        mainList.add(L);
+
+        LongInteger M = A.add(I);
+        mainList.add(M);
+
+        LongInteger N = B.add(K);
+        mainList.add(N);
+
+        LongInteger O = A.subtract(D);
+        mainList.add(O);
+
+        LongInteger P = C.subtract(D);
+        mainList.add(P);
+
+        LongInteger Q = D.subtract(C);
+        mainList.add(Q);
+
+        LongInteger R = L.subtract(L);
+        mainList.add(R);
+
+        LongInteger S = P.subtract(O);
+        mainList.add(S);
+
+        LongInteger T = N.subtract(Q);
+        mainList.add(T);
+        
+        for(int i = 9; i<mainList.size(); i++){
+            System.out.println("\n" + Character.toString((char) (i + 65)));
+            mainList.get(i).output();
+        }
 
 	}
 
