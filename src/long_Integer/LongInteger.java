@@ -294,7 +294,7 @@ public class LongInteger {
 	     * @return The previous node in the list
 	     */
 	    public Node getPrevious(Node p) {
-	    	return this.list.after(p);
+	    	return this.list.before(p);
 	    }
 
 	    /**
@@ -331,16 +331,57 @@ public class LongInteger {
 	    	return this.list.isFirst(p);
 	    }
 
+	    
 	    public LongInteger add(LongInteger i) {
-	    	LongInteger newNum= new LongInteger();
+	    	LongInteger newNum =  null;
 	    	
-	    	
-	    	
+	    	if(this.getSign()==i.getSign()){
+	    		
+	    		newNum = new LongInteger();
+	    		
+	    		// setting the sigh of the new number
+	    		newNum.setSign(this.getSign());
+	    		
+	    		Node a = this.getLast();
+	    		Node b = i.getLast();
+	    		int sum =0;
+	    		
+	    		while(a!=null || b!=null){
+	    			if(a!=null){
+	    				sum+=a.getData();
+	    			}
+	    			if(b!=null){
+	    				sum+=b.getData();
+	    			}
+	    			
+	    			newNum.list.insertFirst(UtilityOperations.underFlow(sum));
+	    			
+	    			sum = UtilityOperations.overFlow(sum);
+	    			
+	    			// moving up the list to the next node
+	    			if( a!=null){
+	    				a = this.getPrevious(a);
+	    			}
+	    			if(b!=null){
+	    				b = i.getPrevious(b);
+	    			}
+	    		}
+	    		
+	    		// adds any remaining numbers to the heads
+	    		if(sum!=0){
+	    			newNum.list.insertFirst(sum);
+	    		}
+	    		
+	    	}
+	    	else{
+	    		newNum= this.subtract(i);
+	    	}
 	    	return newNum;
 	    }
 
 	    public LongInteger subtract(LongInteger i) {
-	    	return null;
+	    	
+	    	return new LongInteger("0");
 	    }
 
 	    public LongInteger multiply(LongInteger i) {
