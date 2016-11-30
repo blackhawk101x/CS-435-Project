@@ -330,12 +330,115 @@ public class LongInteger {
 	    public boolean isFirst(Node p) {
 	    	return this.list.isFirst(p);
 	    }
-
 	    
+	    /**
+	     * !!!!! DEPRECATED !!!!!
+	     * Converts any long integer to its tens complement. Only works for for positive integers
+	     * @param i
+	     * @return
+	     */
+	    private LongInteger tensComplement(LongInteger i){
+	    	LongInteger newNum = new LongInteger();
+	    	
+	    	Node a =i.getLast();
+	    	boolean firstFound = false;
+	    	while(a!=null){
+	    		
+	    		if(!firstFound && a.getData()!=0){ // if the first digit have not been found and it is not zero
+	    			
+	    			newNum.list.insertFirst((int) (Math.pow(10, UtilityOperations.digits(a.getData()) )-a.getData()));
+	    			firstFound=true;
+	    		}
+	    		else if(firstFound){ // if the first set of digits has been found
+	    			if(i.isFirst(a)){
+	    				if(a.getData()>999){
+	    					newNum.list.insertFirst(9999-a.getData());
+	    				}
+	    				else if(a.getData()>99){
+	    					newNum.list.insertFirst(999-a.getData());
+	    				}
+	    				else if(a.getData()>9){
+	    					newNum.list.insertFirst(99-a.getData());
+	    				}
+	    				else{
+	    					newNum.list.insertFirst(9-a.getData());
+	    				}
+	    			}
+	    			
+	    		}
+	    		else{ // if the data is a zero and the first set of digits has not been found
+	    			newNum.list.insertFirst(0);
+	    		}
+	    		a = i.getPrevious(a);
+	    	}	
+	    	return newNum;
+	    }
+	    
+	    /**
+	     * !!!!! DEPRECATED !!!!!
+	     * Performs tens complement math. Only works on two positive numbers
+	     * @param i
+	     * @return
+	     */
+	    @SuppressWarnings("unused")
+		private LongInteger tensComplementAdd(LongInteger i){
+	    	LongInteger newNum = new LongInteger();
+	    	LongInteger tens = this.tensComplement(i);
+	    	
+	    	Node a = this.getLast();
+	    	Node b = tens.getLast();
+	    	
+	    	int overflow =0;
+	    	while(a!=null || b!=null){
+	    		
+	    		if(b==null && a!=null){
+	    			newNum.list.insertFirst(a.getData()+overflow);
+	    			overflow=0;
+	    		}
+	    		else if(b!=null && a==null){
+	    			newNum.list.insertFirst(b.getData()+overflow);
+	    			overflow =0;
+	    		}
+	    		else{
+	    			
+	    			
+	    			int num = UtilityOperations.underFlow(a.getData()+b.getData()+overflow);
+	    			
+	    			if(tens.isFirst(b)&& i.lessThan(this)){
+	    				if(UtilityOperations.digits(i.getFirst().getData())%4==0){
+	    					overflow= -1;
+	    				}
+	    				else{
+	    					num-= Math.pow(10, UtilityOperations.digits(i.getFirst().getData()));
+	    					overflow =0;
+	    				}
+	    			}
+
+	    			newNum.list.insertFirst(num);
+
+	    		}
+		
+	    		// moving up the list to the next node
+    			if( a!=null){
+    				a = this.getPrevious(a);
+    			}
+    			if(b!=null){
+    				b = tens.getPrevious(b);
+    			}
+	    		
+	    	}
+	    	return newNum;
+	    }
+	    
+	    /**
+	     * Added this long integer to the specified long integer and returns a new long integer 
+	     * @param i : The long integer to add to this long integer
+	     * @return A new long integer representing the sum of the two long integers this and i 
+	     */
 	    public LongInteger add(LongInteger i) {
 	    	LongInteger newNum =  null;
 	    	
-	    	if(this.getSign()==i.getSign()){
+	    	if(this.getSign()==i.getSign()){ // if the signs are equal
 	    		
 	    		newNum = new LongInteger();
 	    		
@@ -355,7 +458,6 @@ public class LongInteger {
 	    			}
 	    			
 	    			newNum.list.insertFirst(UtilityOperations.underFlow(sum));
-	    			
 	    			sum = UtilityOperations.overFlow(sum);
 	    			
 	    			// moving up the list to the next node
@@ -374,22 +476,169 @@ public class LongInteger {
 	    		
 	    	}
 	    	else{
-	    		newNum= this.subtract(i);
+	    		// if this is negative and i is positive
+	    		if(this.getSign() && !i.getSign()){
+	    			this.setSign(false);
+	    			newNum = i.subtract(this);
+	    			this.setSign(true);
+	    		}
+	    		else{ // if this is positive and i is negative
+	    			i.setSign(false);
+	    			newNum=this.subtract(i);
+	    			i.setSign(true);
+	    		}
 	    	}
 	    	return newNum;
 	    }
-
-	    public LongInteger subtract(LongInteger i) {
+	    
+	    /**
+	     * Removes any leading zeros that may have been added during subtractions
+	     * @param i : The long integer to clean of zeros
+	     * @return A proper long integer
+	     */
+	    private LongInteger sanitize(LongInteger i){
 	    	
-	    	return new LongInteger("0");
+	    	if(i.getFirst().getData()!=0){
+	    		return i;
+	    	}
+	    	else{
+	    		LongInteger newNum = new LongInteger();
+	    		newNum.setSign(i.getSign());
+	    		Node a = i.getNext(i.getFirst());
+	    		boolean firstFound = false;
+	    		while(a!=null){
+	    			
+	    			if(firstFound){
+	    				newNum.list.insertLast(a.getData());
+	    			}
+	    			else{
+	    				if(a.getData()!=0){
+	    					newNum.list.insertLast(a.getData());
+	    					firstFound=true;
+	    				}
+	    			}
+	    			
+	    			a= i.getNext(a);
+	    		}
+	    		return newNum;
+	    	}
+	    }
+	    
+	    /**
+	     * Performs subtraction of i on this.
+	     * @param i : The long integer that should be subtracted from this
+	     * @return The difference between this and i.
+	     */
+	    public LongInteger subtract(LongInteger i) {
+	    	LongInteger newNum = new LongInteger();
+	    	
+	    	// if i is negative
+	    	if(i.getSign()){
+	    		i.setSign(false);
+	    		newNum = this.add(i);
+	    		i.setSign(true);
+	    	}
+	    	else if(this.getSign() && !i.getSign()){ // if this is negative 
+	    		this.setSign(false);
+	    		newNum = this.add(i);
+	    		newNum.setSign(true);
+	    		this.setSign(true);
+	    	}
+	    	else if(this.equalTo(i)){
+	    		newNum.list.insertFirst(0);
+	    	}
+	    	else{
+	    		
+	    		Node a  =null;
+	    		Node b = null;
+	    		
+	    		// which ever one is larger is assigned to a, the smaller one is assigned to b
+	    		if(this.lessThan(i)){
+	    			// if i is bigger than this
+	    			a= i.getLast();
+	    			b= this.getLast();
+	    			newNum.setSign(true);
+	    		}
+	    		else{
+	    			// if this is larger than i
+	    			a= this.getLast();
+	    			b= i.getLast();
+	    			newNum.setSign(false);
+	    		}
+	    		
+	    		int borrow = 0;
+	    		int sum = 0;
+	    		
+	    		// a will always be the larger of the two
+	    		while(a!=null){
+	    			
+	    			if(b!=null){
+	    				if(a.getData()+borrow<b.getData()){
+	    					newNum.list.insertFirst((10000+(a.getData()+borrow))-b.getData());
+	    					borrow =-1;
+	    				}
+	    				else{
+	    					newNum.list.insertFirst((a.getData()+borrow)-b.getData());
+	    					borrow = 0;
+	    				}
+	    			}
+	    			else{
+	    				newNum.list.insertFirst(a.getData()+borrow);
+	    				borrow =0;
+	    			}
+	    			
+	    			// The sign was set in the beginning to negative if i was larger than this. Repeated access to a boolean is better than repeated
+	    			// calling of this.lessthan
+	    			if(newNum.getSign()){
+	    				a= i.getPrevious(a);
+	    				if(b!=null){
+	    					b= this.getPrevious(b);
+	    				}
+	    				
+	    			}
+	    			else{
+	    				a= this.getPrevious(a);
+	    				if(b!=null){
+	    					b= i.getPrevious(b);
+	    				}
+	    			}
+	    			
+	    		}
+	    		
+	    		newNum = sanitize(newNum);
+	    		
+	    		
+	    		/*
+	    		newNum = this.tensComplementAdd(i);
+
+	    		if(this.lessThan(i)){
+	    			LongInteger tmp = this.tensComplement(newNum);
+	    			newNum=tmp;
+	    			newNum.setSign(true);
+	    			//i.setSign(true);
+	    			//newNum = i.add(this);
+	    			//i.setSign(false);
+	    		}
+	    		*/
+	    	}
+	    	
+	    	
+	    	return newNum;
 	    }
 
 	    public LongInteger multiply(LongInteger i) {
-	    	return null;
+	    	LongInteger newNum = new LongInteger();
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	return newNum;
 	    }
 
 	    public LongInteger power(int p) {
-	    	return null;
+	    	LongInteger newNum = new LongInteger();
+	    	return newNum;
 	    }
 
 	    public LongInteger divide(LongInteger i) {

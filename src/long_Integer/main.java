@@ -71,6 +71,11 @@ public class main {
             }
         }
         
+        LongInteger x = new LongInteger("99999999");
+        LongInteger y = new LongInteger("-99999");
+        //x.add(y).output();
+        
+        
         for(int i = 0; i <mainList.size(); i++){
             for(int j = 0; j <mainList.size(); j++) {
                 if(i==j) continue;
@@ -124,7 +129,7 @@ public class main {
             System.out.println("\n" + Character.toString((char) (i + 65)));
             mainList.get(i).output();
         }
-
+        
 	}
 
 }
