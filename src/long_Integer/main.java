@@ -17,6 +17,8 @@ public class main {
         LongInteger H = new LongInteger("-42398534342983742987342987339234098230498203894209928374662342342342356723423");
         LongInteger I = new LongInteger("61284364131684386183513516846948354348943643518468434351684843516846843153846843138468131538431\n" +
 "35138413513843813513813138438435153454154515151513141592654543515316848613242587561516511233246174561276521672162416274123076527");
+        
+        
         ArrayList<LongInteger> mainList = new ArrayList<LongInteger>();
         mainList.add(A);
         mainList.add(B);
@@ -71,11 +73,6 @@ public class main {
             }
         }
         
-        LongInteger x = new LongInteger("99999999");
-        LongInteger y = new LongInteger("-99999");
-        //x.add(y).output();
-        
-        
         for(int i = 0; i <mainList.size(); i++){
             for(int j = 0; j <mainList.size(); j++) {
                 if(i==j) continue;
@@ -129,6 +126,7 @@ public class main {
             System.out.println("\n" + Character.toString((char) (i + 65)));
             mainList.get(i).output();
         }
+        
         
 	}
 
