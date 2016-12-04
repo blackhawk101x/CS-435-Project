@@ -1,5 +1,7 @@
 package long_Integer;
 
+import java.util.ArrayList;
+
 /**
  * 
  * @author Dakota Buell
@@ -605,35 +607,64 @@ public class LongInteger {
 	    			
 	    		}
 	    		
-	    		newNum = sanitize(newNum);
-	    		
-	    		
-	    		/*
-	    		newNum = this.tensComplementAdd(i);
-
-	    		if(this.lessThan(i)){
-	    			LongInteger tmp = this.tensComplement(newNum);
-	    			newNum=tmp;
-	    			newNum.setSign(true);
-	    			//i.setSign(true);
-	    			//newNum = i.add(this);
-	    			//i.setSign(false);
-	    		}
-	    		*/
+	    		newNum = sanitize(newNum); // cleans up any leading zeros
 	    	}
 	    	
 	    	
 	    	return newNum;
 	    }
 
+	    /**
+	     * Performs multiplication on the long integer with another long integer
+	     * @param i : The long integer to multiply by
+	     * @return A product of the this long integer and long integer i
+	     */
 	    public LongInteger multiply(LongInteger i) {
-	    	LongInteger newNum = new LongInteger();
 	    	
+	    	// if either number is equal to zero, return a zero
+	    	if(this.equalTo(new LongInteger("0")) || i.equalTo(new LongInteger("0"))){
+	    		return new LongInteger("0");
+	    	}
 	    	
+	    	LongInteger Product = new LongInteger("0");
 	    	
+	    	Node b = i.getLast();
+	    	int indentMultiplier =0;    	
 	    	
+	    	while(b!=null){
+	    		LongInteger tmp = new LongInteger();
+		    	
+		    	// getting the proper indentation for the product
+		    	for(int x=0;x<indentMultiplier;x++){
+		    		tmp.list.insertFirst(0);
+		    	}
+		    	
+		    	Node a  = this.getLast();
+		    	int overflow=0;
+		    	while(a!=null || overflow !=0){
+		    	
+		    		if(a!=null){
+		    			overflow += a.getData()*b.getData();
+		    			tmp.list.insertFirst(UtilityOperations.underFlow(overflow));
+		    			overflow = UtilityOperations.overFlow(overflow);
+		    			a = this.getPrevious(a);
+		    		}
+		    		else{
+		    			tmp.list.insertFirst(UtilityOperations.underFlow(overflow));
+		    			overflow = UtilityOperations.overFlow(overflow);
+		    		}
+		    	}
+		    	
+		    	Product = Product.add(tmp);
+	    		
+	    		indentMultiplier++;
+	    		b = i.getPrevious(b);
+	    	}
 	    	
-	    	return newNum;
+	    	// setting the sign of the new long integer
+	    	Product.setSign(this.getSign() != i.getSign());
+	    	
+	    	return Product;
 	    }
 
 	    public LongInteger power(int p) {
@@ -644,4 +675,16 @@ public class LongInteger {
 	    public LongInteger divide(LongInteger i) {
 	    	return null;
 	    }
+	    
+	    protected LongInteger clone(){
+	    	LongInteger newNum = new LongInteger();
+	    	
+	    	newNum.setSign(this.getSign());
+	    	for(Node a = this.getFirst();a!=null;a=this.getNext(a)){
+	    		newNum.list.insertLast(a.getData());
+	    	}
+	    	
+	    	return newNum;
+	    }
+	    
 }
