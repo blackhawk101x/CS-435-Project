@@ -667,23 +667,27 @@ public class LongInteger {
 	    	return Product;
 	    }
 
+	    /**
+	     * Raises this to the power of p
+	     * @param p : The power to raise this by
+	     * @return A long integer which is the the power of this raised to p
+	     */
 	    public LongInteger power(int p) {
 	    	
-	    	if(p==0){
+	    	if(p==0){ // if p is 0, return a long integer 1
 	    		return new LongInteger("1");
 	    	}
-	    	else if(p==1){
+	    	else if(p==1){ // if p is 1, return a copy of itself
 	    		return this.clone();
 	    	}
 	    	
 	    	LongInteger num1 =this.power(p/2);
     		LongInteger num2 = this.power(p/2);
    		
-	    	if(p%2==0){
-	    		// if the power number is even
+	    	if(p%2==0){ // if the p is even
 	    		return num1.multiply(num2);
 	    	}
-	    	else{
+	    	else{ // if p is odd
 	    		return this.multiply(num1.multiply(num2));
 	    	}
 	    }
