@@ -668,8 +668,24 @@ public class LongInteger {
 	    }
 
 	    public LongInteger power(int p) {
-	    	LongInteger newNum = new LongInteger();
-	    	return newNum;
+	    	
+	    	if(p==0){
+	    		return new LongInteger("1");
+	    	}
+	    	else if(p==1){
+	    		return this.clone();
+	    	}
+	    	
+	    	LongInteger num1 =this.power(p/2);
+    		LongInteger num2 = this.power(p/2);
+   		
+	    	if(p%2==0){
+	    		// if the power number is even
+	    		return num1.multiply(num2);
+	    	}
+	    	else{
+	    		return this.multiply(num1.multiply(num2));
+	    	}
 	    }
 
 	    public LongInteger divide(LongInteger i) {
@@ -683,7 +699,6 @@ public class LongInteger {
 	    	for(Node a = this.getFirst();a!=null;a=this.getNext(a)){
 	    		newNum.list.insertLast(a.getData());
 	    	}
-	    	
 	    	return newNum;
 	    }
 	    
