@@ -127,7 +127,52 @@ public class main {
             mainList.get(i).output();
         }
         
+        for(int i = 9; i<mainList.size(); i++){
+            System.out.println("\n" + Character.toString((char) (i + 65)));
+            mainList.get(i).output();
+        }
         
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++) {
+                if(i==j) continue;
+                System.out.println("\n" + Character.toString((char) (i + 65)) + " multiplied by " + Character.toString((char) (j + 65)));
+                mainList.get(i).multiply(mainList.get(j)).output();
+            }
+        }
+        
+        for(int i = 0; i < 3; i++){
+            System.out.println("\n" + Character.toString((char) (i + 65)) + " to 5th Power");
+            mainList.get(i).power(5).output();
+            System.out.println("\n" + Character.toString((char) (i + 65)) + " to 10th Power");
+            mainList.get(i).power(10).output();
+            System.out.println("\n" + Character.toString((char) (i + 65)) + " to 25th Power");
+            mainList.get(i).power(25).output();
+            System.out.println("\n" + Character.toString((char) (i + 65)) + " to 31th Power");
+            mainList.get(i).power(30).output();
+        }
+        
+        LongInteger U = A.multiply(D);
+        mainList.add(U);
+
+        LongInteger V = B.multiply(C);
+        mainList.add(V);
+
+        LongInteger W = D.multiply(D);
+        mainList.add(W);
+
+        LongInteger X = O.multiply(I);
+        mainList.add(X);
+
+        LongInteger Y = J.multiply(P);
+        mainList.add(Y);
+
+        LongInteger Z = M.multiply(N);
+        mainList.add(Z);
+        
+        for(int i = 20; i<mainList.size(); i++){
+            System.out.println("\n" + Character.toString((char) (i + 65)));
+            mainList.get(i).output();
+        }
 	}
 
 }
